@@ -3,7 +3,7 @@ class Client < ApplicationRecord
   before_create :ensure_authetication_token
 
   def ensure_authetication_token
-    self.authentication_token = Devise.friendly_token
+    self.auth_token = Devise.friendly_token
   end
 end
 
@@ -11,7 +11,7 @@ end
 #
 # Table name: clients
 #
-#  id         :bigint(8)        not null, primary key
+#  id         :uuid             not null, primary key
 #  auth_token :string           not null
 #  user_id    :uuid             not null
 #  created_at :datetime         not null

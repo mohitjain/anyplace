@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  address: MyString
+  description: MyString
+
+two:
+  name: MyString
+  address: MyString
+  description: MyString
+
+# == Schema Information
+#
+# Table name: hotels
+#
+#  id          :uuid             not null, primary key
+#  name        :string           not null
+#  address     :string           not null
+#  description :string           not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#

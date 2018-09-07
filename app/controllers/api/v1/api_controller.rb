@@ -9,8 +9,7 @@ module Api
 
       def ping
         render json: {
-          auth_token: params[:auth_token],
-          message: "hello, #{@user.name}!"
+          message: "Hello, #{@user.name}!"
         }
       end
 

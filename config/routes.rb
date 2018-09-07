@@ -12,9 +12,8 @@ Rails.application.routes.draw do
       end
 
       resources :hotels, only: [:index, :show] do
-        member do
-          get :availability
-        end
+        resources :availabilities, only: [:index, :show, :create, :update]
+        resources :pricings, only: [:index, :show, :create, :update]
       end
     end
   end

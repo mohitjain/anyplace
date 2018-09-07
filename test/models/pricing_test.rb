@@ -22,5 +22,5 @@ end
 #
 #  index_pricings_on_hotel_id_and_price_date      (hotel_id,price_date)
 #  index_pricings_on_hotel_id_and_room_type_id    (hotel_id,room_type_id)
-#  index_pricings_on_room_type_id_and_price_date  (room_type_id,price_date)
+#  index_pricings_on_room_type_id_and_price_date  (room_type_id,price_date) UNIQUE
 #

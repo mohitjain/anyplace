@@ -4,11 +4,12 @@ class Availability < ApplicationRecord
   belongs_to :room_type
 
   validates :room_type_id, unchangeable: true, presence: true
-
+  validates :availability_date, presence: true, unchangeable: true, date: { after_or_equal_to: Proc.new { Date.today }, message: "can't be in past." }
   validates :available_rooms, presence: true, numericality: {
     only_integer: true,
     greater_than_or_equal_to: 0,
   }
+  validates_uniqueness_of :availability_date, scope: :room_type_id
 
   scope :active, -> { where("availability_date >= ?", Date.today) }
 
@@ -39,6 +40,6 @@ end
 #
 #  index_availabilities_on_hotel_id_and_availability_date      (hotel_id,availability_date)
 #  index_availabilities_on_hotel_id_and_room_type_id           (hotel_id,room_type_id)
-#  index_availabilities_on_room_type_id_and_availability_date  (room_type_id,availability_date)
+#  index_availabilities_on_room_type_id_and_availability_date  (room_type_id,availability_date) UNIQUE
 #  index_availabilities_on_room_type_id_and_hotel_id           (room_type_id,hotel_id)
 #

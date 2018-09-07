@@ -3,12 +3,13 @@ class Pricing < ApplicationRecord
   belongs_to :hotel
   belongs_to :room_type
 
-  validates :room_type_id, presence: true
+  validates :room_type_id, presence: true, unchangeable: true
   validates :price, presence: true, numericality: {
     greater_than_or_equal_to: 0,
   }
 
   validates :price_date, presence: true, unchangeable: true, date: { after_or_equal_to: Proc.new { Date.today }, message: "can't be in past." }
+  validates_uniqueness_of :price_date, scope: :room_type_id
 
   before_create :set_hotel_id
   scope :active, -> { where("price_date >= ?", Date.today) }
@@ -38,5 +39,5 @@ end
 #
 #  index_pricings_on_hotel_id_and_price_date      (hotel_id,price_date)
 #  index_pricings_on_hotel_id_and_room_type_id    (hotel_id,room_type_id)
-#  index_pricings_on_room_type_id_and_price_date  (room_type_id,price_date)
+#  index_pricings_on_room_type_id_and_price_date  (room_type_id,price_date) UNIQUE
 #

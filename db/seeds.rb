@@ -8,7 +8,7 @@
 
 AdminUser.create(email: 'admin@anyplace.com', password: 'password')
 
-10.times.each do
+2.times.each do
   User.create(
     name: Faker::GameOfThrones.character,
     email: Faker::Internet.email,
@@ -16,7 +16,7 @@ AdminUser.create(email: 'admin@anyplace.com', password: 'password')
   )
 end
 
-50.times.each do
+12.times.each do
   hotel = Hotel.create(
     name: Faker::GameOfThrones.house,
     address: Faker::Address.full_address,
@@ -31,7 +31,7 @@ end
     )
   end
   hotel.reload
-  60.times.each do |index|
+  30.times.each do |index|
     hotel.room_types.each do |room_type|
       Pricing.create(
         room_type_id: room_type.id,
@@ -41,7 +41,7 @@ end
     end
   end
 
-  60.times.each do |index|
+  30.times.each do |index|
     hotel.room_types.each do |room_type|
       Availability.create(
         room_type_id: room_type.id,
@@ -51,4 +51,3 @@ end
     end
   end
 end
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

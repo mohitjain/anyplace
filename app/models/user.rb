@@ -1,10 +1,11 @@
+require "#{Rails.root}/lib/validators/email_format_validator.rb"
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :email, :name, presence: true
+  validates :email, :name, presence: true, email_format: true
 
   has_many :clients
 

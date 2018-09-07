@@ -10,11 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_05_214250) do
+ActiveRecord::Schema.define(version: 2018_09_07_110040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "availabilties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "hotel_id", null: false
+    t.uuid "hotel_room_id", null: false
+    t.integer "number_of_rooms", default: 0, null: false
+    t.integer "available_rooms", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hotel_id", "hotel_room_id"], name: "index_availabilties_on_hotel_id_and_hotel_room_id"
+    t.index ["hotel_room_id", "hotel_id"], name: "index_availabilties_on_hotel_room_id_and_hotel_id"
+  end
 
   create_table "clients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "auth_token", null: false
@@ -29,6 +40,24 @@ ActiveRecord::Schema.define(version: 2018_09_05_214250) do
     t.string "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "pricings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "hotel_id", null: false
+    t.uuid "room_type_id", null: false
+    t.date "price_date", null: false
+    t.float "price", default: 0.0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hotel_id", "room_type_id"], name: "index_pricings_on_hotel_id_and_room_type_id"
+  end
+
+  create_table "room_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "category", default: 0, null: false
+    t.uuid "hotel_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hotel_id"], name: "index_room_types_on_hotel_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

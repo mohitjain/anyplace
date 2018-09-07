@@ -5,7 +5,7 @@ module Api
       before_action :find_pricing, only: [:show, :update]
 
       def index
-        @bookings = current_user.bookings.page(
+        @bookings = @user.bookings.page(
           params[:page_number]
         ).per(params[:per_page])
       end

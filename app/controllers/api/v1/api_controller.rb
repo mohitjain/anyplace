@@ -1,10 +1,11 @@
 module Api
   module V1
     class ApiController < ActionController::Base
-      protect_from_forgery with: :null_session
+      #skip_before_action :verify_authenticity_token
+      protect_from_forgery unless: -> { request.format.json? }
       respond_to :json
       before_action :set_default_content_type
-      before_action :authenticate_check, except: [:utc]
+      before_action :authenticate_check, except: [:utc, :signin]
 
       def ping
         render json: {

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       get 'utc' => 'api#utc'
       resources :users, only: [:create] do
         collection do
-          post :sign_in
+          post :signin
         end
       end
     end

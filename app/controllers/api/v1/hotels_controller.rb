@@ -1,6 +1,7 @@
 module Api
   module V1
     class HotelsController < ApiController
+      before_action :find_hotel, only: [:show, :availability]
 
       # {
       #   "filters": {
@@ -21,14 +22,23 @@ module Api
       #   }
       # }
       def index
-        @hotels = Hotel.apply_filters params.permit!.to_hash
+        @hotels, @pricings = Hotel.apply_filters params.permit!.to_hash
       end
 
-      def show; end
-
-      def availability; end
+      def show
+        @hotel, @pricings = Hotel.apply_filters params.permit!.to_hash
+      end
 
       private
+
+      def find_hotel
+        @hotel = Hotel.where(id: params[:id]).first
+        if @hotel.nil?
+          @full_messages = ["Hotel not found"]
+          render 'api/v1/shared/custom_error', status: :not_found
+          return
+        end
+      end
 
       def user_params
         params.require(:user).permit(

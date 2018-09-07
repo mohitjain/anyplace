@@ -15,6 +15,7 @@ class Hotel < ApplicationRecord
   has_many :room_types
 
   scope :live, -> { where(active: true) }
+
 end
 
 # == Schema Information

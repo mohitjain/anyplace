@@ -10,6 +10,8 @@ class Availability < ApplicationRecord
     greater_than_or_equal_to: 0,
   }
 
+  scope :active, -> { where("availability_date >= ?", Date.today) }
+
   before_create :set_hotel_id
 
   private

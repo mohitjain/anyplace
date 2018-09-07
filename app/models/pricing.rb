@@ -11,6 +11,7 @@ class Pricing < ApplicationRecord
   validates :price_date, presence: true, unchangeable: true, date: { after_or_equal_to: Proc.new { Date.today }, message: "can't be in past." }
 
   before_create :set_hotel_id
+  scope :active, -> { where("price_date >= ?", Date.today) }
 
   private
 

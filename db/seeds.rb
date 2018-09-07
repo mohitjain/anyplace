@@ -32,12 +32,13 @@ end
     )
   end
   hotel.reload
+  price = [50, 60, 70, 80, 90, 100].sample
   30.times.each do |index|
     hotel.room_types.each do |room_type|
       Pricing.create(
         room_type_id: room_type.id,
         price_date: (Date.today + index),
-        price: [50, 60, 70, 80, 90, 100].sample,
+        price: price,
       )
     end
   end

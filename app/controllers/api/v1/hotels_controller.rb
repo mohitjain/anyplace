@@ -21,7 +21,7 @@ module Api
       #   }
       # }
       def index
-        @hotels = Hotel.live.page params[:page]
+        @hotels = Hotel.apply_filters params.permit!.to_hash
       end
 
       def show; end

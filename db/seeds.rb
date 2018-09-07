@@ -16,7 +16,7 @@ AdminUser.create(email: 'admin@anyplace.com', password: 'password')
   )
 end
 
-12.times.each do
+50.times.each do
   hotel = Hotel.create(
     name: Faker::GameOfThrones.house,
     address: Faker::Address.full_address,

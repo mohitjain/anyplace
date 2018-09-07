@@ -2,32 +2,24 @@ module Api
   module V1
     class HotelsController < ApiController
 
-      # param :filters, Hash
-      #   param :hotel_name, String
-      #   param :room_pricing, Hash
-      #     param :min, Integer
-      #     param :max, Integer
-      #   end
-      #   param :coordinates, Hash
-      #     param :city_id, String
-      #   end
-      # end
-      # param :available_room_count, Hash
-      #   param :checkin, String
-      #   param :checkout, String
-      #   param :occupancy_limit, Integer
-      # end
-      # param :format_response, Hash
-      #   param :sort_params, Hash
-      #     param :sort_on, String
-      #     param :ascending, String
-      #   end
-      #   param :batch, Hash
-      #     param :page_number, Integer
-      #     param :per_page, Integer
-      #   end
-      # end
-
+      # {
+      #   "filters": {
+      #     "hotel_name": ""
+      #   },
+      #   "room_pricing": {
+      #     "min": 10,
+      #     "max": 20
+      #   },
+      #   "available_room_count": {
+      #     "checkin": "18/9/2018",
+      #     "checkout": "20/9/2018",
+      #     "number_of_rooms": 2,
+      #   },
+      #   "batch": {
+      #     "page_number": 1,
+      #     "per_page": 1
+      #   }
+      # }
       def index
         @hotels = Hotel.live.page params[:page]
       end

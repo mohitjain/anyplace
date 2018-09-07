@@ -11,6 +11,7 @@ gem 'turbolinks', '~> 5'
 gem 'rabl'
 gem 'devise'
 gem 'oj'
+gem 'kaminari'
 gem 'bootsnap', '>= 1.1.0', require: false
 group :development do
   gem 'faker'

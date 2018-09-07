@@ -30,7 +30,7 @@ module Api
           return false
         end
 
-        @client = Client.find_by_id_and_authentication_token(params[:client_id], params[:auth_token])
+        @client = Client.find_by_id_and_auth_token(params[:client_id], params[:auth_token])
 
         if @client.nil? or @client.user.nil?
           render json: {

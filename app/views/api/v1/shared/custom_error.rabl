@@ -1,4 +1,4 @@
 child :errors do
-  node(:error_keys) { |object| {} }
-  node(:full_messages) { |object| @full_messages }
+  node(:error_keys) { {} }
+  node(:full_messages) { @full_messages }
 end

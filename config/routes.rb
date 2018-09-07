@@ -8,6 +8,8 @@ Rails.application.routes.draw do
           post :signin
         end
       end
+
+      resources :hotels, only: [:index, :show]
     end
   end
 end

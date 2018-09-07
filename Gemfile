@@ -16,8 +16,8 @@ gem 'activeadmin'
 gem "date_validator"
 gem 'kaminari'
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'faker'
 group :development do
-  gem 'faker'
   gem 'bullet'
   gem 'railroady'
   gem 'active_record_query_trace'

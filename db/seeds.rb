@@ -17,10 +17,38 @@ AdminUser.create(email: 'admin@anyplace.com', password: 'password')
 end
 
 50.times.each do
-  Hotel.create(
+  hotel = Hotel.create(
     name: Faker::GameOfThrones.house,
     address: Faker::Address.full_address,
-    description: Faker::Lorem.sentence,
+    description: Faker::GameOfThrones.quote,
   )
+
+  [1,2].sample.times.each do
+    RoomType.create(
+      hotel_id: hotel.id,
+      name: Faker::GameOfThrones.dragon,
+      occupancy_limit: (5..10).to_a.sample,
+    )
+  end
+  hotel.reload
+  60.times.each do |index|
+    hotel.room_types.each do |room_type|
+      Pricing.create(
+        room_type_id: room_type.id,
+        price_date: (Date.today + index),
+        price: [50, 60, 70, 80, 90, 100].sample,
+      )
+    end
+  end
+
+  60.times.each do |index|
+    hotel.room_types.each do |room_type|
+      Availability.create(
+        room_type_id: room_type.id,
+        availability_date: (Date.today + index),
+        available_rooms: room_type.occupancy_limit,
+      )
+    end
+  end
 end
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

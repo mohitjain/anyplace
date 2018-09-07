@@ -12,9 +12,6 @@ class RoomType < ApplicationRecord
   def to_label
     [hotel.name, name].join(" --- ")
   end
-
-
-
 end
 
 # == Schema Information

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_07_121128) do
+ActiveRecord::Schema.define(version: 2018_09_07_124726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -45,11 +45,13 @@ ActiveRecord::Schema.define(version: 2018_09_07_121128) do
   create_table "availabilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "hotel_id", null: false
     t.uuid "room_type_id", null: false
-    t.integer "number_of_rooms", default: 0, null: false
     t.integer "available_rooms", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "availability_date", null: false
+    t.index ["hotel_id", "availability_date"], name: "index_availabilities_on_hotel_id_and_availability_date"
     t.index ["hotel_id", "room_type_id"], name: "index_availabilities_on_hotel_id_and_room_type_id"
+    t.index ["room_type_id", "availability_date"], name: "index_availabilities_on_room_type_id_and_availability_date"
     t.index ["room_type_id", "hotel_id"], name: "index_availabilities_on_room_type_id_and_hotel_id"
   end
 
@@ -76,7 +78,9 @@ ActiveRecord::Schema.define(version: 2018_09_07_121128) do
     t.float "price", default: 0.0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["hotel_id", "price_date"], name: "index_pricings_on_hotel_id_and_price_date"
     t.index ["hotel_id", "room_type_id"], name: "index_pricings_on_hotel_id_and_room_type_id"
+    t.index ["room_type_id", "price_date"], name: "index_pricings_on_room_type_id_and_price_date"
   end
 
   create_table "room_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

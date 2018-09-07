@@ -17,6 +17,7 @@ end
 #  name            :string           not null
 #  occupancy_limit :integer          default(1), not null
 #  active          :boolean          default(TRUE), not null
+#  number_of_rooms :integer          default(0), not null
 #
 # Indexes
 #

@@ -1,3 +1,4 @@
+require "#{Rails.root}/lib/searchable/hotel_methods.rb"
 class Hotel < ApplicationRecord
   validates :name, :address, :description, :active, presence: true
 

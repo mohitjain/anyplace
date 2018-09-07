@@ -27,7 +27,8 @@ end
     RoomType.create(
       hotel_id: hotel.id,
       name: Faker::GameOfThrones.dragon,
-      occupancy_limit: (5..10).to_a.sample,
+      occupancy_limit: (1..3).to_a.sample,
+      number_of_rooms: (5..10).to_a.sample,
     )
   end
   hotel.reload

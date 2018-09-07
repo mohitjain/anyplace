@@ -7,6 +7,11 @@ class RoomType < ApplicationRecord
     integer: true,
   }
 
+  validates :number_of_rooms, presence: true, numericality: {
+    greater_than_or_equal_to: 0,
+    integer: true,
+  }
+
   scope :live, -> { where(active: true) }
 
   def to_label
@@ -25,6 +30,7 @@ end
 #  name            :string           not null
 #  occupancy_limit :integer          default(1), not null
 #  active          :boolean          default(TRUE), not null
+#  number_of_rooms :integer          default(0), not null
 #
 # Indexes
 #

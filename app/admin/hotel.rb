@@ -14,14 +14,14 @@ ActiveAdmin.register Hotel do
       table_for hotel.room_types do |room_type|
         column :name
         column :occupancy_limit
+        column :number_of_rooms
         column :created_at
       end
     end
 
     panel "Availabilities" do
       table_for hotel.availabilities do |availability|
-        column :hotel_room
-        column :number_of_rooms
+        column :room_type
         column :available_rooms
         column :created_at
         column :updated_at
@@ -29,8 +29,7 @@ ActiveAdmin.register Hotel do
     end
 
     panel "Pricings" do
-      table_for hotel.availabilities do |availability|
-        column :id
+      table_for hotel.pricings do |pricing|
         column :room_type
         column :price_date
         column :price
@@ -38,5 +37,4 @@ ActiveAdmin.register Hotel do
       end
     end
   end
-
 end

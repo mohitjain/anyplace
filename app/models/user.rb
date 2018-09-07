@@ -8,6 +8,7 @@ class User < ApplicationRecord
   validates :email, :name, presence: true, email_format: true
 
   has_many :clients
+  has_many :bookings, -> { order("bookings.checkin ASC")}
 
 end
 

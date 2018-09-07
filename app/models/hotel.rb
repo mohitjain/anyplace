@@ -2,7 +2,7 @@ require "#{Rails.root}/lib/searchable/hotel_methods.rb"
 class Hotel < ApplicationRecord
   include Searchable::HotelMethods
   validates :name, :address, :description, :active, presence: true
-
+  has_many :bookings, -> { order("bookings.checkin ASC")}
   has_many :pricings
   has_many :active_pricings, -> {
     where("pricings.price_date >= ?", Date.today)

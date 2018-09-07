@@ -10,10 +10,10 @@ Rails.application.routes.draw do
           post :signin
         end
       end
-
+      resources :bookings, only: [:index, :create]
       resources :hotels, only: [:index, :show] do
-        resources :availabilities, only: [:index, :show, :create, :update]
-        resources :pricings, only: [:index, :show, :create, :update]
+        resources :availabilities, except: [:edit, :destroy]
+        resources :pricings, except: [:edit, :destroy]
       end
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_07_195718) do
+ActiveRecord::Schema.define(version: 2018_09_07_203416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -53,6 +53,25 @@ ActiveRecord::Schema.define(version: 2018_09_07_195718) do
     t.index ["hotel_id", "room_type_id"], name: "index_availabilities_on_hotel_id_and_room_type_id"
     t.index ["room_type_id", "availability_date"], name: "index_availabilities_on_room_type_id_and_availability_date", unique: true
     t.index ["room_type_id", "hotel_id"], name: "index_availabilities_on_room_type_id_and_hotel_id"
+  end
+
+  create_table "bookings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "hotel_id", null: false
+    t.date "checkin", null: false
+    t.date "checkout", null: false
+    t.float "monthly_rent", default: 0.0, null: false
+    t.float "rent", default: 0.0, null: false
+    t.integer "status", default: 0, null: false
+    t.uuid "room_type_id", null: false
+    t.integer "number_of_rooms", default: 1, null: false
+    t.json "meta_data", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["checkin", "checkout"], name: "index_bookings_on_checkin_and_checkout"
+    t.index ["checkout"], name: "index_bookings_on_checkout"
+    t.index ["hotel_id"], name: "index_bookings_on_hotel_id"
+    t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
   create_table "clients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

@@ -11,6 +11,8 @@ gem 'turbolinks', '~> 5'
 gem 'rabl'
 gem 'devise'
 gem 'oj'
+gem 'cancancan', '~> 2.0'
+gem 'activeadmin'
 gem "date_validator"
 gem 'kaminari'
 gem 'bootsnap', '>= 1.1.0', require: false

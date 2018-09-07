@@ -8,7 +8,15 @@ class Pricing < ApplicationRecord
     greater_than_or_equal_to: 0,
   }
 
-  validates :price_date, :price, presence: true, unchangeable: true, date: { after_or_equal_to: Proc.new { Date.today }, message: "can't be in past." }
+  validates :price_date, presence: true, unchangeable: true, date: { after_or_equal_to: Proc.new { Date.today }, message: "can't be in past." }
+
+  before_create :set_hotel_id
+
+  private
+
+  def set_hotel_id
+    self.hotel_id = room_type.hotel_id
+  end
 
 end
 

@@ -6,6 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+AdminUser.create(email: 'admin@anyplace.com', password: 'password')
+
 10.times.each do
   User.create(
     name: Faker::GameOfThrones.character,
@@ -21,3 +23,4 @@ end
     description: Faker::Lorem.sentence,
   )
 end
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

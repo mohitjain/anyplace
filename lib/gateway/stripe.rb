@@ -38,7 +38,7 @@ module Gateway
           amount: amount,
           currency: "usd",
           source: token, # obtained with Stripe.js
-          description: "Charge for booking id #{booking.id} for payment id #{payment.id}"
+          description: "Charge for booking id #{booking.id} for payment id #{payment.id}",
           metadata: {
             booking_id: booking.id,
             payment_id: payment.id,

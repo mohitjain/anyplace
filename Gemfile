@@ -10,6 +10,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'rabl'
 gem 'devise'
+gem 'whenever', require: false
 gem 'oj'
 gem 'cancancan', '~> 2.0'
 gem 'activeadmin'

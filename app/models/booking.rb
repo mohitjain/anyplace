@@ -27,11 +27,16 @@ class Booking < ApplicationRecord
 
   enum status: {
     pending: 0,
-    confirmed: 1,
+    auto_cancelled: 1,
+    confirmed: 2,
   }
 
   before_validation :set_hotel_id
   validate :check_availability_and_calculate_rent, on: :create
+
+  def self.cancel_bookings_with_no_payments
+    Booking.pending.where("created_at < ?", Time.now - 15.minutes).update_all(status: "auto_cancelled")
+  end
 
   private
 
@@ -69,11 +74,6 @@ class Booking < ApplicationRecord
     }
     Hotel.apply_filters(data)
   end
-
-
-
-
-
 end
 
 # == Schema Information
@@ -87,7 +87,7 @@ end
 #  checkout        :date             not null, indexed => [checkin], indexed
 #  monthly_rent    :float            default(0.0), not null
 #  rent            :float            default(0.0), not null
-#  status          :integer          default(0), not null
+#  status          :integer          default("pending"), not null, indexed
 #  room_type_id    :uuid             not null
 #  number_of_rooms :integer          default(1), not null
 #  meta_data       :json             not null
@@ -99,5 +99,6 @@ end
 #  index_bookings_on_checkin_and_checkout  (checkin,checkout)
 #  index_bookings_on_checkout              (checkout)
 #  index_bookings_on_hotel_id              (hotel_id)
+#  index_bookings_on_status                (status)
 #  index_bookings_on_user_id               (user_id)
 #

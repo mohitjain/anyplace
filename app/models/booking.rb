@@ -2,7 +2,8 @@ class Booking < ApplicationRecord
   belongs_to :user
   belongs_to :hotel
   belongs_to :room_type
-
+  has_many :payments
+  
   validates :user_id, :hotel_id, :status, :room_type_id, presence: true
 
   validates :rent, :monthly_rent,

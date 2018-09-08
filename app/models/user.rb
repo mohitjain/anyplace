@@ -25,6 +25,7 @@ end
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  name                   :string           not null
+#  stripe_id              :string
 #
 # Indexes
 #

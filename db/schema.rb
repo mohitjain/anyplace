@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_08_160919) do
+ActiveRecord::Schema.define(version: 2018_09_08_180656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -91,6 +91,19 @@ ActiveRecord::Schema.define(version: 2018_09_08_160919) do
     t.boolean "active", default: true, null: false
   end
 
+  create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "booking_id", null: false
+    t.integer "gateway", default: 0, null: false
+    t.string "txnid", null: false
+    t.float "amount", default: 0.0, null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "gateway_id"
+    t.index ["booking_id"], name: "index_payments_on_booking_id"
+    t.index ["txnid"], name: "index_payments_on_txnid"
+  end
+
   create_table "pricings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "hotel_id", null: false
     t.uuid "room_type_id", null: false
@@ -123,6 +136,7 @@ ActiveRecord::Schema.define(version: 2018_09_08_160919) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name", null: false
+    t.string "stripe_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -16,5 +16,7 @@ class ActiveAdminAbility
     can :cannot_delete, Availability
     can :cannot_delete, Pricing
     can :cannot_delete, RoomType
+    can :read, Booking
+    can :read, Payment
   end
 end

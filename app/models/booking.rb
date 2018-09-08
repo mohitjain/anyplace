@@ -25,6 +25,8 @@ class Booking < ApplicationRecord
     message: "can't be in past."
   }, on: :create
 
+  validate :check_availability_and_calculate_rent, on: :create
+
   enum status: {
     pending: 0,
     auto_cancelled: 1,
@@ -32,10 +34,16 @@ class Booking < ApplicationRecord
   }
 
   before_validation :set_hotel_id
-  validate :check_availability_and_calculate_rent, on: :create
+  after_create :decrease_inventory
+  after_update :increase_inventory, if: :auto_cancelled?
 
   def self.cancel_bookings_with_no_payments
-    Booking.pending.where("created_at < ?", Time.now - 15.minutes).update_all(status: "auto_cancelled")
+    Booking.pending.where(
+      "created_at < ?", Time.now - 15.minutes
+    ).each do |booking|
+      booking.status = "auto_cancelled"
+      booking.save
+    end
   end
 
   private
@@ -73,6 +81,18 @@ class Booking < ApplicationRecord
       }
     }
     Hotel.apply_filters(data)
+  end
+
+  def decrease_inventory
+    self.room_type.availabilities.where(availability_date: (checkin..(checkout-1))).each do |availability|
+      availability.decrement!(:available_rooms, number_of_rooms)
+    end
+  end
+
+  def increase_inventory
+    self.room_type.availabilities.where(availability_date: (checkin..(checkout-1))).each do |availability|
+      availability.increment!(:available_rooms, number_of_rooms)
+    end
   end
 end
 

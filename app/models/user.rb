@@ -5,7 +5,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :email, :name, presence: true, email_format: true
+  validates :email, :name, presence: true#, email_format: true
 
   has_many :clients
   has_many :bookings, -> { order("bookings.checkin ASC")}

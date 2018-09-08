@@ -47,9 +47,11 @@
 - Start the Server and have fun ;)
 
 - Admin Side
-    localhost:3000/admin
-    username: admin@anyplace.com
-    password: password
+
+
+      <url>/admin
+      username: admin@anyplace.com
+      password: password
 
 - API Docs
     You can find API Docs [here](https://documenter.getpostman.com/view/86471/RWaGUpRe#edcae9a1-21e2-4905-b2b8-6c8e31ed1317)

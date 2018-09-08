@@ -1,24 +1,55 @@
-# README
+### Installation Third Party Softwares (Mac)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+- brew install postgres
+- brew tap homebrew/services
+- brew services start postgresql
 
-Things you may want to cover:
 
-* Ruby version
+### Install RVM
 
-* System dependencies
+    gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+    \curl -sSL https://get.rvm.io | bash -s stable
+    source ~/.bashrc # or ~/.zshrc
+    source ~/.bash_profile # or ~/.zsh_profile
 
-* Configuration
+### Install Ruby
 
-* Database creation
+    rvm install 2.3.4
 
-* Database initialization
+### Setup the project
 
-* How to run the test suite
+- Clone the repo
+- Install Bundler
 
-* Services (job queues, cache servers, search engines, etc.)
+      gem install bundler
 
-* Deployment instructions
+- Install Gems
 
-* ...
+      bundle install
+
+### Setup Database
+
+- Copy database_sample.yml to database.yml & change username and password.
+
+- Create DB
+
+      rake db:create
+
+- Run migrations
+
+      rake db:migrate
+
+- Run Seed Database
+
+      rake db:seed
+
+
+- Start the Server and have fun ;)
+
+- Admin Side
+    localhost:3000/admin
+    username: admin@anyplace.com
+    password: password
+
+- API Docs
+    You can find API Docs [here](https://documenter.getpostman.com/view/86471/RWaGUpRe#edcae9a1-21e2-4905-b2b8-6c8e31ed1317)

@@ -31,12 +31,46 @@ class Booking < ApplicationRecord
   }
 
   before_validation :set_hotel_id
+  validate :check_availability_and_calculate_rent, on: :create
 
   private
 
   def set_hotel_id
     self.hotel_id = room_type.hotel_id if room_type.present?
   end
+
+  def calculate_rent
+    number_of_days = (checkout - checkin).to_i
+    self.rent = monthly_rent*number_of_days/30
+  end
+
+  def check_availability_and_calculate_rent
+    hotel_object, pricing = check_availability
+    if hotel_object.first.nil?
+      self.errors.add(:room_type_id, "is not longer available")
+      return false
+    else
+      self.monthly_rent = pricing[room_type_id]
+      calculate_rent
+    end
+    true
+  end
+
+  def check_availability
+    data = {
+      filters: {
+        id: hotel_id,
+      },
+      available_room_count: {
+        checkin: checkin,
+        checkout: checkout,
+        number_of_rooms: number_of_rooms,
+      }
+    }
+    Hotel.apply_filters(data)
+  end
+
+
 
 
 

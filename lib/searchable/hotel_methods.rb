@@ -41,13 +41,17 @@ module Searchable
         if available_room_count_params.present?
           if available_room_count_params[:checkin].present? && available_room_count_params[:checkout].present?
             date_range = (available_room_count_params[:checkin].to_date..(available_room_count_params[:checkout].to_date - 1)).to_a
-            number_of_rooms = (available_room_count_params[:available_room_count_params] || 1).to_i
-            hotel_ids = Availability.where("availability_date IN (?)", date_range).group("hotel_id").having("MIN(available_rooms) >= #{number_of_rooms}").pluck(:hotel_id)
+            number_of_rooms = (available_room_count_params[:number_of_rooms] || 1).to_i
+            availabilities = Availability.where("availability_date IN (?)", date_range)
+            availabilities = availabilities.where("availabilities.room_type_id = ?", available_room_count_params[:room_type_id]) if available_room_count_params[:room_type_id].present?
+            hotel_ids = availabilities.group("hotel_id").having("MIN(available_rooms) >= #{number_of_rooms}").pluck(:hotel_id)
             records = records.where("hotels.id IN (?)", hotel_ids)
 
             pricings = records.joins(:pricings).where(
               "pricings.price_date IN (?)", date_range
-            ).group("hotel_id, room_type_id").select(
+            )
+            pricings = pricings.where("pricings.room_type_id = ?", available_room_count_params[:room_type_id]) if available_room_count_params[:room_type_id].present?
+            pricings = pricings.group("hotel_id, room_type_id").select(
               "pricings.room_type_id as room_type_id, (SUM(price)*30/#{date_range.count}) as final_price"
             ).inject({}){|h, e| h[e.room_type_id] = e.final_price; h}
           end
